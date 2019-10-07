@@ -14,24 +14,76 @@ const dbConnection = mysql.createConnection({
     database: "bamazon"
 });
 
-dbConnection.connect(function(err) {
+dbConnection.connect(function (err) {
     if (err) throw err;
-    console.log("Welcome to Bamazon! Here's what we have for sale today:");
+    console.log("Welcome to BAMAZON! Here's what we have for sale today:");
     // dbConnection.end();
     listProducts();
 });
 
 function listProducts() {
-    dbConnection.query("SELECT * FROM products", function(err, results) {
-    // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
+    dbConnection.query("SELECT * FROM products", function (err, results) {
+        // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
         if (err) throw err;
-        
+
         for (let i = 0; i < results.length; i++) {
-        table.push(
-            [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
-            // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
-        );}
+            table.push(
+                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
+                // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
+            );
+        }
         console.log(table.toString());
         // console.log(results);
+        buyProduct();
+    })
+}
+
+function buyProduct() {
+    dbConnection.query("SELECT * FROM products", function (err, results) {
+        if (err) throw err;
+        inquirer
+            .prompt([
+                {
+                    name: "itemID",
+                    type: "input",
+                    message: "Please enter the Product ID of the item you'd like to purchase:"
+                },
+                {
+                    name: "quantity",
+                    type: "input",
+                    message: "Please enter the quantity you'd like to purchase:"
+                }
+            ])
+            .then(function (answer) {
+                var chosenID;
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].item_id === answer.itemID) {
+                         chosenID = results[i];
+                        //  console.log(chosenID);
+                    }
+                }
+
+                if (chosenID.stock_quantity > parseInt(answer.quantity)) {
+                    dbConnection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                stock_quantity: answer.quantity
+                            },
+                            {
+                                item_id: chosenID.item_id
+                            }
+                        ],
+                        function (error) {
+                            if (error) throw err;
+                            console.log("Your order has been placed.")
+                            console.log("Your credit card will be charged $" + (chosenID.price * answer.quantity))
+                        }
+                    )
+                } else {
+                    console.log("We don't have enough " + chosenID.product_name + "s!");
+                    dbConnection.end();
+                }
+            })
     })
 }
