@@ -7,7 +7,9 @@ There are two main parts to Bamazon. The first one is the Customer view. This vi
 To run Bamazon, you'll need to run the bamazonCustomer.js or bamazonManager.js file in node. Make sure to install all the dependencies first!
 
 [Video of the initial Customer View in action](https://drive.google.com/file/d/1NIhFH9m4jqzVOa3jvpPiZHRhV09lTZAN/view?usp=sharing)
+
 [Video of the manager view](https://drive.google.com/file/d/1fZBSdX-ZwnCV_pacH5bakEMzYvx76HQI/view?usp=sharing)
+
 [Video of the updated Customer view](https://drive.google.com/file/d/1Hy7ZK5xf5tU0h-p3sDiW86_-Xmky3lGY/view?usp=sharing)
 
 ___
