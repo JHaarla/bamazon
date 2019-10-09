@@ -60,30 +60,25 @@ function listProducts() {
     });
 
     dbConnection.query("SELECT * FROM products", function (err, results) {
-        // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
         if (err) throw err;
 
         for (let i = 0; i < results.length; i++) {
             table.push(
                 [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price.toFixed(2), results[i].stock_quantity]
-                // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
             );
         }
         console.log(table.toString());
         taskChoice()
         // console.log(results);
-        // buyProduct();
     })
 }
 
 function listLowInv() {
     table = "";
-
     table = new Table({
         head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
         colWidths: [12, 23, 18, 17, 10]
     });
-
     dbConnection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
         for (let i = 0; i < results.length; i++) {
@@ -100,7 +95,6 @@ function listLowInv() {
 
 function listLowInv2() {
     table = "";
-
     table = new Table({
         head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
         colWidths: [12, 23, 18, 17, 10]
@@ -194,11 +188,6 @@ function addProd() {
             var deptName = answer.dept;
             var price = answer.price;
             var stock = answer.quantity;
-            // for (var i = 0; i < results.length; i++) {
-                // console.log('results', results[i])
-                // if (results[i].item_id === parseInt(answer.itemID)) {
-                //     chosenID = results[i];
-                    //  console.log(chosenID);
                     dbConnection.query(
                         "INSERT INTO products SET ?",
                         [
@@ -213,11 +202,9 @@ function addProd() {
                             if (error) throw err;
                             console.info("\n=====================================")
                             console.log("New product has been added for sale!");
-                            // console.log(answer.quantity + " " + chosenID.product_name + "s" + " have been added.");
                             console.info("=====================================\n")
                             taskChoice();
                         })
                 }
-            // }
         )
 }
