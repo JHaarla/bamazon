@@ -166,3 +166,7 @@ function addInv() {
             )
     })
 }
+
+function addProd() {
+    
+}
