@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const inquirer = require("inquirer");
 const Table = require("cli-table");
 
-const table = new Table({
+var table = new Table({
     head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
     colWidths: [12, 23, 18, 17, 10]
 });
@@ -16,12 +16,18 @@ const dbConnection = mysql.createConnection({
 
 dbConnection.connect(function (err) {
     if (err) throw err;
-    console.log("Welcome to BAMAZON! Here's what we have for sale today:");
-    // dbConnection.end();
+    console.log(`
+===================================
+        Welcome to BAMAZON! 
+===================================
+
+Here's what we have for sale today:
+`);
     listProducts();
 });
 
 function listProducts() {
+
     dbConnection.query("SELECT * FROM products", function (err, results) {
         // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
         if (err) throw err;
@@ -55,14 +61,14 @@ function buyProduct() {
                 }
             ])
             .then(function (answer) {
-                console.log('answer', answer)
+                // console.log('answer', answer)
                 var chosenID;
                 for (var i = 0; i < results.length; i++) {
                     // console.log('results', results[i])
 
                     if (results[i].item_id === parseInt(answer.itemID)) {
                         // console.log('results', results[i])
-                         chosenID = results[i];
+                        chosenID = results[i];
                         //  console.log(chosenID);
                     }
                 }
@@ -82,17 +88,69 @@ function buyProduct() {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log("Your order has been placed.");
-                            console.log(chosenID.price);
-                            console.log(parseFloat(chosenID.price.replace(/,/g, "")).toFixed(2));
-                            console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, "")).toFixed(2)) * (answer.quantity)));
-                            
+                            console.info("\n=====================================")
+
+                            console.log("Thank you for your order. It has been placed.");
+                            // console.log(chosenID.price);
+                            // console.log(parseFloat(chosenID.price.replace(/,/g, "")).toFixed(2));
+                            console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, ""))) * (answer.quantity)).toFixed(2));
+                            console.info("=====================================\n")
+                            buyMore()
                         }
                     )
                 } else {
+                    console.info("\n=====================================")
                     console.log("We don't have enough " + chosenID.product_name + "s!");
-                    dbConnection.end();
+                    console.info("=====================================\n")
+                    // dbConnection.end();
+                    buyMore();
                 }
             })
+    })
+}
+
+function buyMore() {
+    inquirer
+        .prompt([
+            {
+                name: "buyMore",
+                type: "list",
+                message: "Would you like to purchase something else or exit?",
+                choices: ["Make another purchase", "I'm done"]
+            }
+            
+        ]).then(function(action) {
+            if (action.buyMore === "Make another purchase") {
+                relistProducts();
+            } else {
+                dbConnection.end();
+            }
+        })
+}
+
+
+function relistProducts() {
+
+    table = "";
+
+    table = new Table({
+        head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
+        colWidths: [12, 23, 18, 17, 10]
+    });
+    
+
+    dbConnection.query("SELECT * FROM products", function (err, results) {
+        // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
+        if (err) throw err;
+
+        for (let i = 0; i < results.length; i++) {
+            table.push(
+                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
+                // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
+            );
+        }
+        console.log(table.toString());
+        // console.log(results);
+        buyProduct();
     })
 }
