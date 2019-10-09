@@ -61,11 +61,8 @@ function buyProduct() {
                 }
             ])
             .then(function (answer) {
-                // console.log('answer', answer)
                 var chosenID;
                 for (var i = 0; i < results.length; i++) {
-                    // console.log('results', results[i])
-
                     if (results[i].item_id === parseInt(answer.itemID)) {
                         // console.log('results', results[i])
                         chosenID = results[i];
@@ -91,8 +88,6 @@ function buyProduct() {
                             console.info("\n=====================================")
 
                             console.log("Thank you for your order. It has been placed.");
-                            // console.log(chosenID.price);
-                            // console.log(parseFloat(chosenID.price.replace(/,/g, "")).toFixed(2));
                             console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, ""))) * (answer.quantity)).toFixed(2));
                             console.info("=====================================\n")
                             buyMore()
@@ -101,7 +96,6 @@ function buyProduct() {
                 } else {
                     console.info("\n=====================================")
                     console.log("We don't have enough " + chosenID.product_name + "s!");
-                    console.info("=====================================\n")
                     // dbConnection.end();
                     buyMore();
                 }
