@@ -148,12 +148,10 @@ function addInv() {
                 }
             ])
             .then(function (answer) {
-                // console.log('answer', answer)
                 var chosenID;
                 for (var i = 0; i < results.length; i++) {
                     // console.log('results', results[i])
                     if (results[i].item_id === parseInt(answer.itemID)) {
-                        // console.log('results', results[i])
                         chosenID = results[i];
                         //  console.log(chosenID);
                         dbConnection.query(
@@ -170,11 +168,7 @@ function addInv() {
                                 if (error) throw err;
                                 console.info("\n=====================================")
                                 console.log(answer.quantity + " " + chosenID.product_name + "s" + " have been added.");
-                                // console.log(chosenID.price);
-                                // console.log(parseFloat(chosenID.price.replace(/,/g, "")).toFixed(2));
-                                // console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, ""))) * (answer.quantity)).toFixed(2));
                                 console.info("=====================================\n")
-                                // listProducts();
                                 taskChoice();
                             }
                         )
