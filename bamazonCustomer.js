@@ -34,7 +34,7 @@ function listProducts() {
 
         for (let i = 0; i < results.length; i++) {
             table.push(
-                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
+                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price.toFixed(2), results[i].stock_quantity]
                 // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
             );
         }
@@ -88,7 +88,8 @@ function buyProduct() {
                             console.info("\n=====================================")
 
                             console.log("Thank you for your order. It has been placed.");
-                            console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, ""))) * (answer.quantity)).toFixed(2));
+                            // console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, ""))) * (answer.quantity)).toFixed(2));
+                            console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price)) * (answer.quantity)).toFixed(2));
                             console.info("=====================================\n")
                             buyMore()
                         }
@@ -139,7 +140,7 @@ function relistProducts() {
 
         for (let i = 0; i < results.length; i++) {
             table.push(
-                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
+                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price.toFixed(2), results[i].stock_quantity]
                 // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
             );
         }

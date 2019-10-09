@@ -1,0 +1,13 @@
+item_id,product_name,department_name,price,stock_quantity
+1,8-track player,Electronics,74.99,55
+2,T-shirt,Clothing,19.95,461
+3,Polo Shirt,Clothing,34.99,215
+4,Rubber Duck,Misc,2.99,2048
+5,Laptop,Electronics,"1,129.99",15
+6,Comfy Socks,Clothing,14.49,761
+7,Headphones,Electronics,59.99,102
+8,Blinker Fluid,Misc,19.99,128
+9,Life Support System,Escape Plan,"10,000,000.00",4
+10,Space Nav System,Escape Plan,"99,999.99",6
+11,Towel,Escape Plan,19.99,42
+12,Space Ship,Escape Plan,"100,000,000.00",2

@@ -41,7 +41,7 @@ function taskChoice() {
                 listLowInv();
             } else if (action.whatDo === "Add to inventory") {
                 addInv();
-            } else if () {
+            } else if (action.whatDo === "Add a new product") {
                 addProd();
             }
 
@@ -65,7 +65,7 @@ function listProducts() {
 
         for (let i = 0; i < results.length; i++) {
             table.push(
-                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
+                [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price.toFixed(2), results[i].stock_quantity]
                 // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
             );
         }
@@ -158,15 +158,66 @@ function addInv() {
                                 console.log(answer.quantity + " " + chosenID.product_name + "s" + " have been added.");
                                 console.info("=====================================\n")
                                 taskChoice();
-                            }
-                        )
+                            })
                     }
                 }
-            }
-            )
+            })
     })
 }
 
 function addProd() {
-    
+    inquirer
+        .prompt([
+            {
+                name: "name",
+                type: "input",
+                message: "Please enter the name of the product you'd like to add:"
+            },
+            {
+                name: "quantity",
+                type: "input",
+                message: "Please enter the quantity you'd like to add:"
+            },
+            {
+                name: "price",
+                type: "input",
+                message: "Please enter the price:"
+            },
+            {
+                name: "dept",
+                type: "input",
+                message: "Please enter the department for the product:"
+            }
+        ])
+        .then(function (answer) {
+            var productName = answer.name;
+            var deptName = answer.dept;
+            var price = answer.price;
+            var stock = answer.quantity;
+            // for (var i = 0; i < results.length; i++) {
+                // console.log('results', results[i])
+                // if (results[i].item_id === parseInt(answer.itemID)) {
+                //     chosenID = results[i];
+                    //  console.log(chosenID);
+                    dbConnection.query(
+                        "INSERT INTO products SET ?",
+                        [
+                            {
+                                product_name: productName,
+                                department_name: deptName,
+                                price: price,
+                                stock_quantity: stock
+                            }
+                        ],
+                        function (error) {
+                            if (error) throw err;
+                            console.info("\n=====================================")
+                            console.log("New product has been added for sale!");
+                            // console.log(answer.quantity + " " + chosenID.product_name + "s" + " have been added.");
+                            console.info("=====================================\n")
+                            taskChoice();
+                        })
+                }
+            // }
+        )
 }
