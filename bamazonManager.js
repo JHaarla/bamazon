@@ -41,6 +41,8 @@ function taskChoice() {
                 listLowInv();
             } else if (action.whatDo === "Add to inventory") {
                 addInv();
+            } else if () {
+                addProd();
             }
 
             else {
@@ -83,22 +85,16 @@ function listLowInv() {
     });
 
     dbConnection.query("SELECT * FROM products", function (err, results) {
-        // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
         if (err) throw err;
-
         for (let i = 0; i < results.length; i++) {
             if (results[i].stock_quantity < 5) {
-
                 table.push(
                     [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
-                    // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
                 );
             }
         }
         console.log(table.toString());
         taskChoice()
-        // console.log(results);
-        // buyProduct();
     })
 }
 
@@ -109,24 +105,16 @@ function listLowInv2() {
         head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
         colWidths: [12, 23, 18, 17, 10]
     });
-
     dbConnection.query("SELECT * FROM products", function (err, results) {
-        // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
         if (err) throw err;
-
         for (let i = 0; i < results.length; i++) {
             if (results[i].stock_quantity < 5) {
-
                 table.push(
                     [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
-                    // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
                 );
             }
         }
         console.log(table.toString());
-        // taskChoice()
-        // console.log(results);
-        // buyProduct();
     })
 }
 
