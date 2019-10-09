@@ -14,7 +14,7 @@ const dbConnection = mysql.createConnection({
     database: "bamazon"
 });
 
-dbConnection.connect(function (err) {
+dbConnection.connect(err => {
     if (err) throw err;
     console.log(`
 ===================================
@@ -28,7 +28,7 @@ Here's what we have for sale today:
 
 function listProducts() {
 
-    dbConnection.query("SELECT * FROM products", function (err, results) {
+    dbConnection.query("SELECT * FROM products", (err, results) => {
         if (err) throw err;
         for (let i = 0; i < results.length; i++) {
             table.push(
@@ -42,7 +42,7 @@ function listProducts() {
 }
 
 function buyProduct() {
-    dbConnection.query("SELECT * FROM products", function (err, results) {
+    dbConnection.query("SELECT * FROM products", (err, results) => {
         if (err) throw err;
         inquirer
             .prompt([
@@ -77,10 +77,9 @@ function buyProduct() {
                                 item_id: chosenID.item_id
                             }
                         ],
-                        function (error) {
+                        error => {
                             if (error) throw err;
                             console.info("\n=====================================")
-
                             console.log("Thank you for your order. It has been placed.");
                             // console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, ""))) * (answer.quantity)).toFixed(2));
                             console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price)) * (answer.quantity)).toFixed(2));
@@ -107,7 +106,7 @@ function buyMore() {
                 choices: ["Make another purchase", "I'm done"]
             }
             
-        ]).then(function(action) {
+        ]).then(action => {
             if (action.buyMore === "Make another purchase") {
                 relistProducts();
             } else {
