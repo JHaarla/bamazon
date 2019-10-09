@@ -90,6 +90,8 @@ function buyProduct() {
                 } else {
                     console.info("\n=====================================")
                     console.log("We don't have enough " + chosenID.product_name + "s!");
+                    console.info("=====================================\n")
+
                     buyMore();
                 }
             })

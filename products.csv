@@ -1,13 +1,13 @@
 product_name,department_name,price,stock_quantity
-8-track player,Electronics,74.99,55
-T-shirt,Clothing,19.95,461
-Polo Shirt,Clothing,34.99,215
-Rubber Duck,Misc,2.99,2048
-Laptop,Electronics,1129.99,15
-Comfy Socks,Clothing,14.49,761
-Headphones,Electronics,59.99,102
-Blinker Fluid,Misc,19.99,128
-Life Support System,Escape Plan,10000000.00,4
-Space Nav System,Escape Plan,99999.99,6
+8-track player,Electronics,74.99,25
+T-shirt,Clothing,19.95,128
+Polo Shirt,Clothing,34.99,76
+Rubber Duck,Misc,2.99,1028
+Laptop,Electronics,1129.99,5
+Comfy Socks,Clothing,14.49,321
+Headphones,Electronics,59.99,27
+Blinker Fluid,Misc,19.99,64
+Life Support System,Escape Plan,10000000,3
+Space Nav System,Escape Plan,99999.99,5
 Towel,Escape Plan,19.99,42
-Space Ship,Escape Plan,100000000.00,2
+Space Ship,Escape Plan,100000000,1
