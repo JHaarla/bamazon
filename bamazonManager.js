@@ -14,7 +14,7 @@ const dbConnection = mysql.createConnection({
     database: "bamazon"
 });
 
-dbConnection.connect(function (err) {
+dbConnection.connect(err => {
     if (err) throw err;
     console.log(`
     ===================================
@@ -34,7 +34,7 @@ function taskChoice() {
                 choices: ["View products for sale", "View low inventory items", "Add to inventory", "Add a new product", "Exit"]
             }
 
-        ]).then(function (action) {
+        ]).then(action => {
             if (action.whatDo === "View products for sale") {
                 listProducts();
             } else if (action.whatDo === "View low inventory items") {
@@ -59,7 +59,7 @@ function listProducts() {
         colWidths: [12, 23, 18, 17, 10]
     });
 
-    dbConnection.query("SELECT * FROM products", function (err, results) {
+    dbConnection.query("SELECT * FROM products", (err, results) => {
         if (err) throw err;
 
         for (let i = 0; i < results.length; i++) {
@@ -79,7 +79,7 @@ function listLowInv() {
         head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
         colWidths: [12, 23, 18, 17, 10]
     });
-    dbConnection.query("SELECT * FROM products", function (err, results) {
+    dbConnection.query("SELECT * FROM products", (err, results) => {
         if (err) throw err;
         for (let i = 0; i < results.length; i++) {
             if (results[i].stock_quantity < 5) {
@@ -99,7 +99,7 @@ function listLowInv2() {
         head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
         colWidths: [12, 23, 18, 17, 10]
     });
-    dbConnection.query("SELECT * FROM products", function (err, results) {
+    dbConnection.query("SELECT * FROM products", (err, results) => {
         if (err) throw err;
         for (let i = 0; i < results.length; i++) {
             if (results[i].stock_quantity < 5) {
@@ -114,7 +114,7 @@ function listLowInv2() {
 
 function addInv() {
     listLowInv2();
-    dbConnection.query("SELECT * FROM products", function (err, results) {
+    dbConnection.query("SELECT * FROM products", (err, results) => {
         if (err) throw err;
         inquirer
             .prompt([
@@ -129,7 +129,7 @@ function addInv() {
                     message: "Please enter the quantity you'd like to add:"
                 }
             ])
-            .then(function (answer) {
+            .then(answer => {
                 var chosenID;
                 for (var i = 0; i < results.length; i++) {
                     // console.log('results', results[i])
@@ -146,7 +146,7 @@ function addInv() {
                                     item_id: chosenID.item_id
                                 }
                             ],
-                            function (error) {
+                            (error) => {
                                 if (error) throw err;
                                 console.info("\n=====================================")
                                 console.log(answer.quantity + " " + chosenID.product_name + "s" + " have been added.");
@@ -183,7 +183,7 @@ function addProd() {
                 message: "Please enter the department for the product:"
             }
         ])
-        .then(function (answer) {
+        .then(answer => {
             var productName = answer.name;
             var deptName = answer.dept;
             var price = answer.price;
@@ -198,7 +198,7 @@ function addProd() {
                                 stock_quantity: stock
                             }
                         ],
-                        function (error) {
+                        error => {
                             if (error) throw err;
                             console.info("\n=====================================")
                             console.log("New product has been added for sale!");
