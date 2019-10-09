@@ -91,7 +91,6 @@ function buyProduct() {
                 } else {
                     console.info("\n=====================================")
                     console.log("We don't have enough " + chosenID.product_name + "s!");
-                    // dbConnection.end();
                     buyMore();
                 }
             })
@@ -115,8 +114,6 @@ function buyMore() {
                 console.info("\n=====================================")
                 console.info("     Thanks for shopping at BAMAZON!")
                 console.info("=====================================\n")
-
-
                 dbConnection.end();
             }
         })
@@ -124,23 +121,17 @@ function buyMore() {
 
 
 function relistProducts() {
-
     table = "";
-
     table = new Table({
         head: ["Product ID", "Product Name", "Department Name", "Price", "Stock"],
         colWidths: [12, 23, 18, 17, 10]
     });
-    
-
     dbConnection.query("SELECT * FROM products", function (err, results) {
         // dbConnection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, results) {
         if (err) throw err;
-
         for (let i = 0; i < results.length; i++) {
             table.push(
                 [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price.toFixed(2), results[i].stock_quantity]
-                // [results[1].item_id, results[1].product_name, results[1].department_name, results[1].price, results[1].stock_quantity]
             );
         }
         console.log(table.toString());
