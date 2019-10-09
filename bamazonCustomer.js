@@ -55,20 +55,26 @@ function buyProduct() {
                 }
             ])
             .then(function (answer) {
+                console.log('answer', answer)
                 var chosenID;
                 for (var i = 0; i < results.length; i++) {
-                    if (results[i].item_id === answer.itemID) {
+                    // console.log('results', results[i])
+
+                    if (results[i].item_id === parseInt(answer.itemID)) {
+                        // console.log('results', results[i])
                          chosenID = results[i];
                         //  console.log(chosenID);
                     }
                 }
 
-                if (chosenID.stock_quantity > parseInt(answer.quantity)) {
+                // console.log('chosenID', chosenID)
+
+                if (chosenID.stock_quantity >= parseInt(answer.quantity)) {
                     dbConnection.query(
                         "UPDATE products SET ? WHERE ?",
                         [
                             {
-                                stock_quantity: answer.quantity
+                                stock_quantity: (chosenID.stock_quantity - answer.quantity)
                             },
                             {
                                 item_id: chosenID.item_id
@@ -76,8 +82,11 @@ function buyProduct() {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log("Your order has been placed.")
-                            console.log("Your credit card will be charged $" + (chosenID.price * answer.quantity))
+                            console.log("Your order has been placed.");
+                            console.log(chosenID.price);
+                            console.log(parseFloat(chosenID.price.replace(/,/g, "")).toFixed(2));
+                            console.log("Your credit card will be charged $" + ((parseFloat(chosenID.price.replace(/,/g, "")).toFixed(2)) * (answer.quantity)));
+                            
                         }
                     )
                 } else {
